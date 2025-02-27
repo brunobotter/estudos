@@ -9,3 +9,5 @@ Toda configuração esta dentro dos nos control-planes, e toda carga de trabalho
 2. pods
 
 Tudo que precisamos para por as configurações, e o container que esta dentro dele herda todas as configurações, e permite criar n replicas dentro dele, permitindo escalar
+
+replicas set controla a aplicação, caso a aplicação tenha problema ela recria a aplicação
