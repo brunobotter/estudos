@@ -65,3 +65,41 @@ Processo com baixo uso de CPU e alto uso de I/O.
 
 - Resolver latência e sobrecarga do banco de dados com **caching**.  
 - Tudo que puder ser processado **assincronamente** deve ser, para melhorar o **throughput**.
+
+---
+
+# Trade-offs
+
+- Caching 
+
+## Performance vs consistencia
+
+Quanto mais distante da fonte da verdade maior a performance. Em contra partida, menor a consistencia
+Quanto mais perto o cache esta do banco mais consistente ele e porem menos performatico porem quanto mais perto do browser menor e sua consistencia, porem mais performatico
+Invalidar cache entre micro serviços pode ser desafiador
+
+## latencia vs throuhgput
+
+Quando mais distribuido o cache maior o throughput. Em contra partida maior a latencia
+Sair de um cache em memoria para um cache distribuido, piora a latencia por causa da rede
+
+- Processamento assincrono
+
+## Mudança no workflow
+
+Client-side precisa se adptar ao modelo assincrono e trabalhar um pouco mais para obter uma resposta
+
+## Fire and Forget
+
+Ignorar o feebback do fluxo de envio e como maximizamos o throughput ao custo de perda de mensagens
+
+- Balanciamento de carga
+
+## Latencia vs consistencia
+
+Diminuir a latencia muitas vezes significa abrir mão de uma consistencia mais forte
+
+## Cordenação e race conditions
+
+Distribuir a carga pode significar mais throughput ao custo de novas formas de quebrar o sistema
+
