@@ -1,22 +1,37 @@
+
 # 📘 Guia Prático de Cognitive Driven Design (CDD)
 
-CDD (Cognitive Driven Design) é uma abordagem para reduzir a complexidade cognitiva do código, tornando-o mais simples de entender, testar, manter e evoluir. Este guia cobre práticas para medir, controlar e melhorar a qualidade do código utilizando princípios do CDD.
+O CDD (Cognitive Driven Design ou Cognitive-Driven Development) é uma abordagem criada pela Zup Innovation para ajudar desenvolvedores a manter o código simples, compreensível e sustentável, reduzindo a complexidade cognitiva.
+
 
 ---
 
 ## 🧠 O que é Complexidade Cognitiva?
 
-Complexidade cognitiva é o esforço mental necessário para entender o fluxo de um código. Códigos com alta complexidade exigem mais atenção, dificultam manutenção e aumentam a chance de erros.
+É o esforço mental necessário para entender um trecho de código. Ela vai além da quantidade de linhas: depende da forma como o código é escrito, como as decisões estão organizadas e da presença de estruturas que exigem mais raciocínio.
+
+Ex: if, for, try-catch, muitas chamadas encadeadas, funções longas, etc.
+
+---
+
+## 🎯 Fundamentos do CDD
+
+O CDD busca oferecer visibilidade sobre decisões e dificuldades técnicas ao longo do desenvolvimento. Isso é feito por meio de **eventos de marcação cognitiva** (quando o código atinge certos critérios) e **ICP (Intrinsic Complexity Points)**.
+
+- **Marcações cognitivas**: pontos do código onde a complexidade aumenta.
+- **ICP**: métrica numérica que representa a complexidade.
+
+Essas práticas incentivam comportamentos como:
+
+- Refatoração precoce
+- Discussão técnica baseada em dados
+- Simplicidade no design
 
 ---
 
 ## 📐 Métrica de ICP (Intrinsic Complexity Points)
 
-### 🎯 Objetivo
-
-Quantificar a complexidade para facilitar sua gestão.
-
-### 📊 Pontuação
+### Como pontuar?
 
 | Elemento                                          | Pontos |
 |--------------------------------------------------|--------|
@@ -25,6 +40,8 @@ Quantificar a complexidade para facilitar sua gestão.
 | `try/catch/finally`                              | +1     |
 | Funções com múltiplos argumentos                 | +1     |
 | Acoplamento com classes específicas do projeto   | +1     |
+
+> 🔍 A Zup recomenda que desenvolvedores marquem os pontos ICP manualmente com comentários ou anotações nos PRs, usando ferramentas como plugins para VSCode ou CI scripts personalizados.
 
 ### 🧪 Exemplo
 
@@ -53,7 +70,7 @@ function processPayment(payment) {
   - `Controller`: até 10
   - `Repository`: até 5
 
-> 🔍 **Dica**: Ferramentas como SonarQube ou ESLint com plugins personalizados podem ajudar a medir automaticamente.
+> 💡 A Zup sugere usar os ICPs também em arquivos de teste e em PRs como critério de revisão e melhoria contínua.
 
 ---
 
@@ -69,15 +86,6 @@ function processPayment(payment) {
 - 🔁 Explore **Property-Based Testing**
 - 📏 Avalie a complexidade dos testes com uma versão de ICP adaptada
 
-### 🧪 Exemplo com MC/DC e Boundary
-
-```ts
-it("should reject payment if amount exceeds limit", () => {
-  const result = processPayment({ amount: 10001 }); // limite: 10000
-  expect(result).toBe(false);
-});
-```
-
 ---
 
 ## 🧾 Logging Sistemático
@@ -90,14 +98,6 @@ it("should reject payment if amount exceeds limit", () => {
 | Chamadas de serviços externos          | `info`       |
 | Erros recuperáveis                     | `error`      |
 
-### Exemplo
-
-```ts
-logger.info("Iniciando persistência no banco", { userId });
-await repository.save(data);
-logger.info("Persistência concluída", { userId });
-```
-
 > 🛡 **Importante**: Use a biblioteca padrão da empresa que formata e enriquece o log.
 
 ---
@@ -107,34 +107,11 @@ logger.info("Persistência concluída", { userId });
 - Agrupe funcionalidades relacionadas.
 - Métodos que acessam atributos devem estar dentro da mesma classe.
 
-### Exemplo
-
-```ts
-class Pedido {
-  dataEntrega;
-
-  foiEntregueAntes(outraData) {
-    return this.dataEntrega < outraData;
-  }
-}
-```
-
-> 🚫 Evite classes “Frankenstein” com responsabilidades desconexas.
-
 ---
 
 ## 🛑 Postergue Generalizações
 
 > ⚠️ **Não generalize antes da hora.** Espere pelo menos **3 casos concretos** antes de criar abstrações.
-
-### Exemplo de má prática:
-
-```ts
-// Generalização precoce
-class BaseProcessor {
-  process() {}
-}
-```
 
 ---
 
@@ -157,6 +134,17 @@ class BaseProcessor {
 
 ---
 
+## 📈 Benefícios Comprovados
+
+Segundo experimentos conduzidos pela Zup, o uso de CDD:
+
+- Reduz o tempo de revisão de PRs
+- Aumenta a clareza do código para novos membros
+- Cria ambiente técnico mais colaborativo
+- Estimula refatorações mais seguras e frequentes
+
+---
+
 ## 💬 Conclusão
 
 Este guia é um ponto de partida para reduzir complexidade e melhorar a saúde do código. CDD é uma abordagem incremental, prática e altamente eficaz para manter a qualidade em equipes de desenvolvimento.
@@ -165,3 +153,8 @@ Este guia é um ponto de partida para reduzir complexidade e melhorar a saúde d
 > - Ferramenta para análise automática de ICPs
 > - Integração de CDD ao CI/CD
 > - Exemplos antes/depois reais de refatoração
+> - Estudos de caso do impacto de CDD em times ágeis
+
+---
+
+📚 Fonte: [Zup - Cognitive Driven Development (CDD)](https://zup.com.br/blog/cognitive-driven-development-cdd)
