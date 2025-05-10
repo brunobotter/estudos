@@ -158,3 +158,5 @@ Este guia é um ponto de partida para reduzir complexidade e melhorar a saúde d
 ---
 
 📚 Fonte: [Zup - Cognitive Driven Development (CDD)](https://zup.com.br/blog/cognitive-driven-development-cdd)
+
+
