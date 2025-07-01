@@ -1,7 +1,11 @@
- ISP – Interface Segregation Principle
+# ISP – Interface Segregation Principle
 
- Problema: Interfaces muito grandes que forçam implementações desnecessárias.
+## Problema
+O problema central do ISP é a criação de **interfaces muito grandes**, que forçam as classes a implementarem métodos desnecessários ou irrelevantes para o seu funcionamento.
 
+### Exemplo de Código sem ISP
+
+```go
 type Worker interface {
     Work()
     Eat()
@@ -16,10 +20,11 @@ type Robot struct{}
 
 func (r Robot) Work() { fmt.Println("Working...") }
 func (r Robot) Eat()  { /* ??? Robots don't eat */ }
+```
 
+## 👉 Robot é forçado a implementar Eat, que não faz sentido.
 
-👉 Robot é forçado a implementar Eat, que não faz sentido.
-
+```go
 type Workable interface {
     Work()
 }
@@ -36,7 +41,8 @@ func (h Human) Eat()  { fmt.Println("Eating...") }
 type Robot struct{}
 
 func (r Robot) Work() { fmt.Println("Working...") }
+```
 
-✅ Agora:
+## ✅ Agora:
 
-Cada struct implementa apenas as interfaces que fazem sentido.
+## Cada struct implementa apenas as interfaces que fazem sentido.
