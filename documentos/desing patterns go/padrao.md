@@ -7,11 +7,8 @@
 ### 🧠 Possível pergunta:
 > "Que padrão de projeto você vê nesse código de teste?"
 
-### ✅ Resposta sugerida:
-"Estamos usando um **Test Builder**, combinado com o padrão de **Mock Object**. O `Setup` atua como um builder fluente para configurar as dependências dos testes, e os mocks usam a lib `testify/mock` para simular chamadas externas e permitir testes isolados e previsíveis."
-
 ### Para mostrar maturidade:
-"Esse padrão é ótimo para testes porque reduz o acoplamento e melhora a legibilidade, especialmente em serviços com muitas dependências. Também garante que só inicializo o que preciso — o que melhora performance e clareza nos testes."
+"Esse padrão é ótimo para testes porque reduz o acoplamento e melhora a legibilidade, especialmente em serviços com muitas dependências. Também garante que só inicializo o que preciso — o que melhora performance e clareza nos testes, ele configura as dependencias dos testes"
 
 ---
 
