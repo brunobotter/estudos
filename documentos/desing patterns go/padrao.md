@@ -1,4 +1,4 @@
-# 📦 Padrões de Projeto Usados em Go (para Entrevista Sênior)
+# 📦 Padrões de Projeto Usados em Go 
 
 ---
 
