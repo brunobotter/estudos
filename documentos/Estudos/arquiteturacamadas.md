@@ -1,20 +1,59 @@
 # 🧭 Diferença entre Arquitetura Hexagonal e Clean Architecture
 
-### Hexagonal Architecture (Ports and Adapters)
+A ideia e quase a mesma, independente de qual direcionamente voce quer se proteger de alterações, postegar eventuais mudanças, quer transformar codigo mais intaveis em estaveis, mexendo o minimo possivel no codigo, todas querem resolver o mesmo problema.
 
-- 🧩 O mundo externo conversa com a aplicação através de **portas** (interfaces) e **adaptadores**.
-- 🎯 Foco: **isolar** o core da aplicação das entradas e saídas.
-- 🗣️ Metáfora:  
-  > *"Minha aplicação tem portas para o mundo. Quem quiser falar comigo precisa passar por elas."*
+1. O que é Clean Architecture e por que ela é importante?
+Resposta esperada:
 
-### Clean Architecture
+Clean Architecture é uma abordagem de arquitetura proposta por Robert C. Martin, que visa isolar o núcleo da aplicação (domínio e regras de negócio) de detalhes externos como frameworks, bancos de dados e interfaces de usuário.
 
-- 🎯 Foco: **centralizar** a regra de negócio, tornando-a independente de frameworks, banco e UI.
-- 🔁 Organizada em círculos concêntricos com dependências sempre apontando para dentro.
-- 🏰 Metáfora:  
-  > *"Minha aplicação é um castelo com muralhas. As regras mais importantes estão no centro."*
+Os principais círculos são:
 
----
+Entidades: regras de negócio puras;
+
+Casos de uso: aplicação das regras para resolver problemas reais;
+
+Interface Adapters: adaptação de entrada/saída (DTOs, controllers, presenters);
+
+Frameworks & Drivers: banco, HTTP, UI, etc.
+
+2. Como você aplica inversão de dependência em Clean Architecture ou Hexagonal Architecture?
+Resposta esperada:
+
+Eu aplico a inversão de dependência através de interfaces definidas dentro do core da aplicação (domínio ou camada de caso de uso), e as implementações ficam nas camadas mais externas, como infraestrutura.
+
+Por exemplo, se um caso de uso precisa salvar algo no banco, ele depende de uma interface UserRepository, definida no domínio ou na aplicação. A implementação concreta (PostgreSQL, Mongo, etc) é injetada de fora, normalmente no ponto de entrada (main ou controller).
+
+Isso permite que eu teste o caso de uso isoladamente, com um mock ou stub, sem acoplar à tecnologia usada no banco.
+
+3. Qual a diferença entre a arquitetura em camadas tradicional e Clean Architecture?
+Resposta esperada:
+
+A arquitetura em camadas tradicional é baseada em camadas técnicas — por exemplo, apresentação, serviço, repositório, banco de dados. A dependência costuma ser sempre da camada superior para a inferior, o que gera acoplamento, especialmente com a infraestrutura.
+
+Na Clean Architecture, a principal diferença é que as regras de negócio não dependem de nada externo. As dependências são invertidas: frameworks, banco, e interfaces de usuário é que dependem do domínio.
+
+Isso deixa o core isolado, mais testável e resistente a mudanças tecnológicas.
+
+ Em um projeto real, como você estruturaria um sistema usando Hexagonal Architecture?
+Resposta esperada:
+
+Eu começaria com o core da aplicação — as entidades e casos de uso. Em torno disso, definiria as interfaces de comunicação (ports), como UserRepository, NotificationService, PaymentGateway.
+
+Depois, criaria os adapters de entrada (por exemplo, um controller HTTP que chama os casos de uso) e os adapters de saída (implementações concretas dos ports, como uma API Stripe, um repositório SQL, etc).
+
+No main ou no controller, faria a injeção das dependências conectando os adapters aos ports esperados.
+
+Essa estrutura facilita testes, já que posso mockar os ports, e também torna mais simples mudar uma tecnologia sem afetar o core.
+
+ Em que situações você não usaria Clean Architecture ou Hexagonal Architecture?
+Resposta esperada:
+
+Em projetos pequenos, com baixo domínio de negócio ou vida útil curta (como MVPs simples), pode não compensar o esforço de organizar todas as camadas e abstrações.
+
+Nesses casos, eu uso uma estrutura mais simples, mas ainda mantenho alguns princípios — como separação de responsabilidades e uso de interfaces onde faz sentido.
+
+Sempre avalio o custo-benefício de aplicar uma arquitetura robusta versus a complexidade do domínio e o tempo de entrega.
 
 ## 🏗 Arquitetura em Camadas
 
