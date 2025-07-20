@@ -1,6 +1,7 @@
 # Polimorfismo em Go
 
 ## O que é Polimorfismo?
+Polimorfismo permite que você use o mesmo nome para métodos ou funções, mas com comportamentos diferentes dependendo do tipo do objeto.
 
 Polimorfismo é a capacidade de tratar diferentes tipos de dados de forma uniforme através de uma **interface comum**.  
 Em Go, **polimorfismo é alcançado exclusivamente via interfaces**, não através de herança (Go não tem herança tradicional).

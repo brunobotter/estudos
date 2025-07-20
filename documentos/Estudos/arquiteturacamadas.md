@@ -1,28 +1,3 @@
-# Arquitetura em Camadas
-
-Uma funcionalidade que estou implementando nesse ponto do meu código conversa com várias outras partes do sistema: banco de dados, serviços externos, bibliotecas, etc.
-
-## 💡 Vantagem
-
-Por exemplo, quero implementar um serviço de e-mail, mas ainda não defini qual biblioteca de envio usar. Posso criar uma interface (casca) que representa esse serviço. Quando decidir qual lib usar, apenas implemento essa interface com a biblioteca escolhida.
-
-## 🎯 Objetivo das Arquiteturas
-
-Todas as arquiteturas modernas buscam o mesmo objetivo: proteger o domínio da aplicação (regra de negócio), deixando-o o mais estável e isolado possível.
-
-### Requisitos de uma boa arquitetura:
-
-1. Independente de framework → mudanças no framework não afetam o domínio.
-2. Testável.
-3. Independente de UI.
-4. Independente de banco de dados.
-5. Independente de agentes externos.
-
-> **Regra de dependência**:  
-> Camadas externas podem depender das internas, mas nunca o contrário.
-
----
-
 # 🧭 Diferença entre Arquitetura Hexagonal e Clean Architecture
 
 ### Hexagonal Architecture (Ports and Adapters)
