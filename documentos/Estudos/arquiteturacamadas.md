@@ -35,18 +35,26 @@ Na Clean Architecture, a principal diferença é que as regras de negócio não 
 
 Isso deixa o core isolado, mais testável e resistente a mudanças tecnológicas.
 
- Em um projeto real, como você estruturaria um sistema usando Hexagonal Architecture?
+4. Em um projeto real, como você estruturaria um sistema usando Hexagonal Architecture?
 Resposta esperada:
 
-Eu começaria com o core da aplicação — as entidades e casos de uso. Em torno disso, definiria as interfaces de comunicação (ports), como UserRepository, NotificationService, PaymentGateway.
+Na Arquitetura Hexagonal, a ideia central é isolar o core da aplicação — composto pelas entidades e casos de uso — das interações externas. Para isso, usamos ports (interfaces) e adapters (implementações).
 
-Depois, criaria os adapters de entrada (por exemplo, um controller HTTP que chama os casos de uso) e os adapters de saída (implementações concretas dos ports, como uma API Stripe, um repositório SQL, etc).
+As ports de entrada definem como o mundo externo pode interagir com a aplicação — por exemplo, um UserInputPort com métodos como CreateUser. Um adapter de entrada seria um controller HTTP que recebe a requisição e chama esse port.
 
-No main ou no controller, faria a injeção das dependências conectando os adapters aos ports esperados.
+As ports de saída definem como o core interage com o mundo externo — como UserRepository ou EmailService. Os adapters de saída são implementações concretas, como acesso ao banco de dados ou envio de e-mails.
 
-Essa estrutura facilita testes, já que posso mockar os ports, e também torna mais simples mudar uma tecnologia sem afetar o core.
+Toda a injeção de dependência acontece nos adapters de entrada ou na composição inicial da aplicação.
 
- Em que situações você não usaria Clean Architecture ou Hexagonal Architecture?
+Em um projeto real, implementei isso num sistema de pagamentos. Tínhamos:
+
+Um adapter de entrada REST que chamava o caso de uso ProcessPayment.
+
+Um adapter de saída que implementava PaymentGateway para se comunicar com o Stripe.
+
+O core era totalmente isolado e testável com mocks dessas interfaces.
+
+5. Em que situações você não usaria Clean Architecture ou Hexagonal Architecture?
 Resposta esperada:
 
 Em projetos pequenos, com baixo domínio de negócio ou vida útil curta (como MVPs simples), pode não compensar o esforço de organizar todas as camadas e abstrações.
@@ -201,3 +209,19 @@ Frases de impacto para entrevista
 
 “Quando o domínio muda, o core muda. Quando a tecnologia muda, só o adaptador muda.”
 
+
+Na Clean Architecture, o foco é isolar o domínio da aplicação de qualquer dependência externa como banco de dados, frameworks ou protocolos. Isso torna o sistema mais testável, flexível e resiliente a mudanças.
+
+Em projetos reais, costumo estruturar os pacotes começando com o internal/core, onde ficam as entidades e os casos de uso (usecases). As interfaces (contracts) dos repositórios e serviços externos também ficam ali, para garantir que o core dependa apenas de abstrações.
+
+Fora do core, crio os adapters, por exemplo:
+
+internal/adapter/http com handlers e rotas REST (entrada);
+
+internal/adapter/db com implementações dos repositórios (saída);
+
+Os casos de uso recebem as interfaces como dependência, e no ponto de entrada da aplicação (ex: main.go), eu conecto tudo usando injeção de dependência.
+
+Também costumo isolar código utilitário, DTOs (requests/responses) e middlewares em pacotes separados, sem cruzar com o core.
+
+Essa estrutura ajuda a manter a aplicação organizada e permite escalar ou trocar tecnologias sem tocar no domínio.
