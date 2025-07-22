@@ -2,7 +2,7 @@
 
 **Definição:**  
 Se voce começar a herdar de uma clase qualquer, voce tem que ser muito cuidadoso, quando voce muda a pre e pos condição, que pode fazer o sistema ter comportamentos erroneos nas subclasses.
-
+Ou seja sempre que usar herança devemos sempre aceitar tudo que a classe pai aceita.
 Classes filhas ou classes derivadas **nunca devem infringir comportamentos e definições de tipo** da classe base ou da interface que estão implementando.
 
 > _Se parece com um pato, tem som de pato, mas precisa de bateria para funcionar, provavelmente tem algo errado com sua abstração._
